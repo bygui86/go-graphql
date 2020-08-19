@@ -14,30 +14,26 @@ export GO111MODULE=on
 
 # ACTIONS
 
-## infra
+## application
 
-run-mysql :		## Start MySQL container
-	docker run -d --name mysql \
-		-e MYSQL_ROOT_PASSWORD=supersecret \
-		-p 3306:3306 \
-		mysql
+build :		## Build application
+	go build
 
-run-postgres :		## Start PostgreSQL container
-	docker run -d --name postgres \
-		-e POSTGRES_PASSWORD=supersecret \
-		-p 5432:5432 \
-		postgres
+run :		## Run application from source code
+	go run server.go
 
-## applications
+## gqlgen
 
-run-server :		## Start GraphQL server
-	cd server/ && \
-		make run
+init-graphql :		## Initialise gqlgen for GraphQL
+	#go get github.com/99designs/gqlgen
+	go get github.com/99designs/gqlgen@v0.11.3
+	go run github.com/99designs/gqlgen init
 
-run-client :		## Start GraphQL client
-	@echo "NOT IMPLEMENTED"
-	#cd client/ && \
-#		make run
+generate-graphql :		## Generate gqlgen code for GraphQL based on gqlgen.yml
+	rm -f graph/schema.resolvers.go
+	#go get github.com/99designs/gqlgen
+	go get github.com/99designs/gqlgen@v0.11.3
+	go run github.com/99designs/gqlgen generate
 
 ## helpers
 

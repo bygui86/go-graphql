@@ -54,6 +54,3 @@ go-kubernetes-istio
 
 ########### Go coverage tool output
 *.out
-
-########### Project specific
-go-traces

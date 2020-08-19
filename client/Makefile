@@ -14,30 +14,13 @@ export GO111MODULE=on
 
 # ACTIONS
 
-## infra
+## application
 
-run-mysql :		## Start MySQL container
-	docker run -d --name mysql \
-		-e MYSQL_ROOT_PASSWORD=supersecret \
-		-p 3306:3306 \
-		mysql
+build :		## Build application
+	go build
 
-run-postgres :		## Start PostgreSQL container
-	docker run -d --name postgres \
-		-e POSTGRES_PASSWORD=supersecret \
-		-p 5432:5432 \
-		postgres
-
-## applications
-
-run-server :		## Start GraphQL server
-	cd server/ && \
-		make run
-
-run-client :		## Start GraphQL client
-	@echo "NOT IMPLEMENTED"
-	#cd client/ && \
-#		make run
+run :		## Run application from source code
+	go run client.go
 
 ## helpers
 
