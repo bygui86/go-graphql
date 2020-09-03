@@ -16,29 +16,28 @@ const (
 	serverEndpoint = "http://localhost:8080/query"
 
 	getOrders = `
-		query orders {
-			orders {
-				id  
-				customerName
+		query{
+			orders{
+				id
+				orderAmount
 				items {
 					productName
-					quantity
 				}
 			}
 		}
 	`
 	createOrder = `
-		{
-			"input": {
-				"customerName": "Leo",
-				"orderAmount": 9.99,
-				"items": [
-					{
-						"productCode": "2323",
-						"productName": "IPhone X",
-						"quantity": 1
-					}
-				]
+		mutation CreateOrder($newOrder: OrderInput!) {
+			createOrder(input: $newOrder) {
+				id
+				customerName
+				orderAmount
+				items {
+					id
+					productCode
+					productName
+					quantity
+				}
 			}
 		}
 	`

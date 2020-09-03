@@ -69,7 +69,10 @@ func (q *queryResolver) Orders(ctx context.Context) ([]*model.Order, error) {
 	var orders []*model.Order
 
 	// Preload() method ensures that associations are preloaded while using the Find()
-	err := q.DB.Preload("Items").Find(&orders).Error
+	//err := q.DB.Preload("Items").Find(&orders).Error
+
+	err := q.DB.Find(&orders).Error
+
 	if err != nil {
 		return nil, err
 	}
