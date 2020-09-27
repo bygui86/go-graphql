@@ -18,6 +18,7 @@ import (
 const (
 	port = "8080"
 
+	dialect    = "mysql"
 	dbUsername = "root"
 	dbPassword = "supersecret"
 )
@@ -47,7 +48,7 @@ func main() {
 func initDB() {
 	var err error
 	db, err = gorm.Open(
-		"mysql",
+		dialect,
 		fmt.Sprintf("%s:%s@tcp(localhost:3306)/?parseTime=True", dbUsername, dbPassword),
 	)
 

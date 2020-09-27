@@ -27,20 +27,21 @@ const (
 		}
 	`
 	createOrder = `
-		mutation CreateOrder($newOrder: OrderInput!) {
-			createOrder(input: $newOrder) {
-				id
-				customerName
-				orderAmount
-				items {
-					id
-					productCode
-					productName
-					quantity
-				}
-			}
-		}
-	`
+mutation CreateOrder($newOrder: OrderInput!) {
+  createOrder(input: $newOrder) {
+    id
+    customerName
+    orderAmount
+    items 
+    	{
+        id
+        productCode
+        productName
+        quantity
+      }
+  }
+}
+`
 	updateOrder = `
 		{
 			"orderId":1,

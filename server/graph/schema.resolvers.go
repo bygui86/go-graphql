@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+
 	"github.com/bygui86/go-graphql/server/graph/generated"
 	"github.com/bygui86/go-graphql/server/graph/model"
 )
@@ -71,7 +72,9 @@ func (q *queryResolver) Orders(ctx context.Context) ([]*model.Order, error) {
 	// Preload() method ensures that associations are preloaded while using the Find()
 	//err := q.DB.Preload("Items").Find(&orders).Error
 
-	err := q.DB.Find(&orders).Error
+	// WARN: generates an error like 'can't preload field @@@as@@@ for model.Order'
+	//err := q.DB.Preload(clause.Associations).Find(&orders).Error
+	err := q.DB.Preload("Items").Find(&orders).Error
 
 	if err != nil {
 		return nil, err

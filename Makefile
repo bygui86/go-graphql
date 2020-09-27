@@ -22,12 +22,6 @@ run-mysql :		## Start MySQL container
 		-p 3306:3306 \
 		mysql
 
-run-postgres :		## Start PostgreSQL container
-	docker run -d --name postgres \
-		-e POSTGRES_PASSWORD=supersecret \
-		-p 5432:5432 \
-		postgres
-
 ## applications
 
 run-server :		## Start GraphQL server

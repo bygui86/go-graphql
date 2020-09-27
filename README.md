@@ -3,18 +3,20 @@
 
 Sample project to understand GraphQL implementation in Golang
 
+`/!\ WARN`: This project is incomplete due to some error in loading dependencies. Probably caused by a wrong struct tags generation by `gqlgen`.  
+
 ## Run
 
-1. start PostgreSQL
+1. start MySQL
 
     ```shell script
-    make run-postgres
+    make run-mysql
     ```
 
 2. start go-graphql
 
     ```shell script
-    cd custom
+    cd server
     make run
     ```
 
