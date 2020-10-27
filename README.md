@@ -3,21 +3,18 @@
 
 Sample project to understand GraphQL implementation in Golang
 
-`/!\ WARN`: This project is incomplete due to some error in loading dependencies. Probably caused by a wrong struct tags generation by `gqlgen`.  
-
 ## Run
 
-1. start MySQL
+1. start server
 
     ```shell script
-    make run-mysql
+    make run-server
     ```
 
-2. start go-graphql
+2. start client
 
     ```shell script
-    cd server
-    make run
+    make run-client
     ```
 
 ## Links
@@ -25,14 +22,9 @@ Sample project to understand GraphQL implementation in Golang
 ### Server
 
 - https://graphql.org/
-- https://gqlgen.com/
-- https://github.com/99designs/gqlgen
-- https://www.soberkoder.com/go-graphql-api-mysql-gorm/
-- https://hub.docker.com/_/mysql
-
-#### Issues
-
-There is [an issue](https://github.com/99designs/gqlgen/issues/1283) with `gqlgen v0.12.x`, for now please use `v0.11.3`
+- https://github.com/graphql-go/graphql
+- https://pkg.go.dev/github.com/graphql-go/graphql
+- https://github.com/graphql-go/handler
 
 ### Client
 

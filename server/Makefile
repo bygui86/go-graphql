@@ -22,19 +22,6 @@ build :		## Build application
 run :		## Run application from source code
 	go run server.go
 
-## gqlgen
-
-init-graphql :		## Initialise gqlgen for GraphQL
-	#go get github.com/99designs/gqlgen
-	go get github.com/99designs/gqlgen@v0.11.3
-	go run github.com/99designs/gqlgen init
-
-generate-graphql :		## Generate gqlgen code for GraphQL based on gqlgen.yml
-	rm -f graph/schema.resolvers.go
-	#go get github.com/99designs/gqlgen
-	go get github.com/99designs/gqlgen@v0.11.3
-	go run github.com/99designs/gqlgen generate
-
 ## helpers
 
 help :		## Help

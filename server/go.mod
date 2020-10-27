@@ -1,11 +1,10 @@
 module github.com/bygui86/go-graphql/server
 
-go 1.14
+go 1.15
 
 require (
-	github.com/99designs/gqlgen v0.11.3
-	github.com/go-sql-driver/mysql v1.5.0
-	github.com/jinzhu/gorm v1.9.16
-	github.com/vektah/gqlparser/v2 v2.0.1
-	gorm.io/gorm v1.20.2
+	github.com/go-chi/chi v4.1.2+incompatible
+	github.com/graphql-go/graphql v0.7.9
+	github.com/graphql-go/handler v0.2.3
+	go.mongodb.org/mongo-driver v1.4.2
 )

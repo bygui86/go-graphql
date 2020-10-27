@@ -29,9 +29,8 @@ run-server :		## Start GraphQL server
 		make run
 
 run-client :		## Start GraphQL client
-	@echo "NOT IMPLEMENTED"
-	#cd client/ && \
-#		make run
+	cd client/ && \
+		make run
 
 ## helpers
 
