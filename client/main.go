@@ -1,13 +1,8 @@
 package main
 
 import (
-	"bytes"
 	"context"
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"net/http"
-	"time"
 
 	"github.com/machinebox/graphql"
 )
@@ -15,105 +10,101 @@ import (
 const (
 	serverEndpoint = "http://localhost:8080/query"
 
-	getOrders = `
-		query{
-			orders{
-				id
-				orderAmount
-				items {
-					productName
-				}
-			}
-		}
+	listBooks = `
+query ($limit: Int) {
+  list(limit: $limit) {
+    name
+    price
+    description
+  }
+}
 	`
-	createOrder = `
-mutation CreateOrder($newOrder: OrderInput!) {
-  createOrder(input: $newOrder) {
-    id
-    customerName
-    orderAmount
-    items 
-    	{
-        id
-        productCode
-        productName
-        quantity
-      }
+
+	getBook = `
+query ($name: String!) {
+  book (name: $name) {
+    name
+    price
+    description
   }
 }
 `
-	updateOrder = `
-		{
-			"orderId":1,
-			"input": {
-				"customerName": "Cristiano",
-				"orderAmount": 9.99,
-				"items": [
-					{
-						"productCode": "2323",
-						"productName": "IPhone X",
-						"quantity": 1
-					}
-				]
-			}
-		}
-	`
-	deleteOrder = `
-		{
-			"orderId": 3
-		}
-	`
+
+	createBook = `
+mutation ($name: String!, $price: Float!, $description: String!) {
+  create(name: $name, price: $price, description: $description) {
+    name
+    price
+    description
+  }
+}
+`
+
+	updateBook = `
+mutation ($name: String!, $price: Float, $description: String) {
+  update(name: $name, price: $price, description: $description) {
+    name
+    price
+    description
+  }
+}
+`
+	deleteBook = `
+mutation ($name: String!) {
+  delete(name: $name) {
+    name
+  }
+}
+`
 )
 
 func main() {
-	useLibrary()
+	// list books
+	listReq := graphql.NewRequest(listBooks)
+	listReq.Var("limit", 10)
+	doRequest(listReq)
 
-	//useHttpClient()
+	// create
+	createReq := graphql.NewRequest(createBook)
+	createReq.Var("name", "history")
+	createReq.Var("price", 9.99)
+	createReq.Var("description", "this is an amazing historical book")
+	doRequest(createReq)
+
+	// get book by name
+	getReq := graphql.NewRequest(getBook)
+	getReq.Var("name", "history")
+	doRequest(getReq)
+
+	// uopdate
+	updReq := graphql.NewRequest(updateBook)
+	updReq.Var("name", "history")
+	updReq.Var("price", 19.99)
+	doRequest(updReq)
+
+	// get book by name
+	doRequest(getReq)
+
+	// delete
+	delReq := graphql.NewRequest(deleteBook)
+	delReq.Var("name", "history")
+	doRequest(delReq)
+
+	// list books
+	doRequest(listReq)
 }
 
-func useLibrary() {
+func doRequest(request *graphql.Request) {
 	client := graphql.NewClient(serverEndpoint)
 
-	//request := graphql.NewRequest(getOrders)
-	request := graphql.NewRequest(createOrder)
 	request.Header.Set("Cache-Control", "no-cache")
 
 	var response interface{}
 	ctx := context.Background()
 	err := client.Run(ctx, request, &response)
 	if err != nil {
-		panic(err)
+		fmt.Printf("ERROR: %s \n", err.Error())
+	} else {
+		fmt.Printf("Response: %+v \n", response)
 	}
-
-	fmt.Println(response)
-}
-
-func useHttpClient() {
-	jsonData := map[string]string{
-		"query": `
-            orders {
-				id  
-				customerName
-				items {
-					productName
-					quantity
-				}
-			}
-        `,
-	}
-
-	jsonValue, _ := json.Marshal(jsonData)
-
-	request, err := http.NewRequest(http.MethodPost, serverEndpoint, bytes.NewBuffer(jsonValue))
-
-	client := &http.Client{Timeout: time.Second * 10}
-
-	response, err := client.Do(request)
-	if err != nil {
-		fmt.Printf("The HTTP request failed with error %s\n", err)
-	}
-	defer response.Body.Close()
-
-	data, _ := ioutil.ReadAll(response.Body)
-	fmt.Println(string(data))
 }

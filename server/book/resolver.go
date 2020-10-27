@@ -47,7 +47,7 @@ var (
 					Resolve: func(params graphql.ResolveParams) (interface{}, error) {
 						var result interface{}
 						limit, _ := params.Args["limit"].(int)
-						result = GetBookList(context.Background(), limit)
+						result = GetBooks(context.Background(), limit)
 						return result, nil
 					},
 				},
@@ -65,7 +65,7 @@ var (
 						Type: graphql.NewNonNull(graphql.String),
 					},
 					"price": &graphql.ArgumentConfig{
-						Type: graphql.NewNonNull(graphql.String),
+						Type: graphql.NewNonNull(graphql.Float),
 					},
 					"description": &graphql.ArgumentConfig{
 						Type: graphql.NewNonNull(graphql.String),
@@ -91,7 +91,7 @@ var (
 						Type: graphql.NewNonNull(graphql.String),
 					},
 					"price": &graphql.ArgumentConfig{
-						Type: graphql.String,
+						Type: graphql.Float,
 					},
 					"description": &graphql.ArgumentConfig{
 						Type: graphql.String,

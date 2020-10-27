@@ -5,17 +5,28 @@ Sample project to understand GraphQL implementation in Golang
 
 ## Run
 
-1. start server
+- start server
 
     ```shell script
     make run-server
     ```
 
-2. start client
+- (a) start client
 
     ```shell script
     make run-client
     ```
+
+or
+
+- (b) start Graph*i*QL
+    
+    ```shell script
+    open http://localhost:8080/query
+    ```
+    
+    and copy paste queries and mutations from [examples](graphiql.md)
+
 
 ## Links
 
